@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude — Tips & Tricks</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Noto+Sans+Thai:wght@300;400;600&display=swap');
+
+:root {
+  --ink: #0e0e12;
+  --paper: #f5f0e8;
+  --acid: #c8f135;
+  --orange: #ff5c00;
+  --blue: #1a1aff;
+  --pink: #ff3c78;
+  --muted: #9090a0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Sans Thai', 'Syne', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  background: var(--ink);
+  padding: 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-right {
+  background: var(--acid);
+  padding: 60px 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-mark {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 60px;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--paper);
+}
+
+.hero-title .accent { color: var(--acid); display: block; }
+
+.hero-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 40px;
+}
+
+.big-number {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28vw;
+  line-height: 1;
+  color: rgba(0,0,0,0.12);
+  position: absolute;
+  bottom: -4vw;
+  right: -2vw;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.65);
+  max-width: 280px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 80px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+.card {
+  background: var(--paper);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s, color 0.2s;
+  cursor: default;
+}
+
+.card:hover { background: var(--ink); color: var(--paper); }
+.card:hover .card-icon { color: var(--acid); }
+.card:hover .card-tag { background: var(--blue); color: #fff; }
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  display: block;
+  color: var(--orange);
+  transition: color 0.2s;
+}
+
+.card-tag {
+  display: inline-block;
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  background: var(--ink);
+  color: var(--paper);
+  margin-bottom: 12px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.card p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  opacity: 0.75;
+}
+
+.card .code-snippet {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.75rem;
+  background: rgba(0,0,0,0.07);
+  border-left: 3px solid var(--acid);
+  padding: 10px 14px;
+  margin-top: 12px;
+  line-height: 1.6;
+  border-radius: 0 4px 4px 0;
+}
+.card:hover .code-snippet {
+  background: rgba(255,255,255,0.08);
+  border-left-color: var(--acid);
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--blue);
+  color: var(--paper);
+  padding: 18px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-block;
+  animation: scroll 22s linear infinite;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.marquee-inner span { margin: 0 32px; opacity: 0.5; }
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── BIG TIPS ── */
+.big-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+.big-tip {
+  display: grid;
+  grid-template-columns: 80px 1fr 200px;
+  align-items: center;
+  background: var(--paper);
+  padding: 28px 36px;
+  gap: 32px;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.big-tip:hover { background: var(--pink); color: #fff; }
+
+.tip-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.15;
+}
+
+.tip-body h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.tip-body p { font-size: 0.85rem; line-height: 1.6; opacity: 0.75; }
+
+.tip-badge {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
+  opacity: 0.5;
+}
+
+/* ── PROMPT TABLE ── */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.85rem;
+}
+
+.prompt-table th {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  color: var(--muted);
+}
+
+.prompt-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+.prompt-table tr:hover td { background: rgba(255,255,255,0.04); }
+
+.prompt-table td:first-child {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--acid);
+  white-space: nowrap;
+}
+
+.prompt-table td:nth-child(2) { color: rgba(255,255,255,0.75); }
+.prompt-table td:last-child { color: var(--orange); font-size: 0.8rem; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+footer .f-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+}
+footer .f-logo span { color: var(--acid); }
+
+footer p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-left > * { animation: fadeUp 0.6s ease both; }
+.hero-left > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.25s; }
+
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { min-height: 220px; }
+  .big-tip { grid-template-columns: 50px 1fr; }
+  .tip-badge { display: none; }
+  section { padding: 48px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="logo-mark">Claude AI — คู่มือลับ</div>
+    <div>
+      <h1 class="hero-title">
+        Tips
+        <span class="accent">&amp; Tricks</span>
+        ที่คน<br>ไม่รู้
+      </h1>
+      <p class="hero-subtitle">เทคนิคขั้นสูง · ไม่ธรรมดา · ใช้งานจริง</p>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase">Feb 2026 · claude.ai</p>
+  </div>
+  <div class="hero-right">
+    <div class="big-number">C</div>
+    <p class="hero-desc">รวมเทคนิคแปลกๆ เจ๋งๆ ที่คนใช้ Claude ตัวยงค้นพบ — ตั้งแต่ prompt engineering ขั้นเทพ ไปจนถึงการใช้งานที่คาดไม่ถึง</p>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    ✦ Prompt Chaining &nbsp; ✦ XML Tags &nbsp; ✦ Role Personas &nbsp; ✦ Chain-of-Thought &nbsp; ✦ Few-Shot Examples &nbsp; ✦ Reframe &amp; Retry &nbsp; ✦ Meta Prompting &nbsp; ✦ Output Control &nbsp; ✦ Prompt Chaining &nbsp; ✦ XML Tags &nbsp; ✦ Role Personas &nbsp; ✦ Chain-of-Thought &nbsp; ✦ Few-Shot Examples &nbsp; ✦ Reframe &amp; Retry &nbsp; ✦ Meta Prompting &nbsp; ✦ Output Control &nbsp;
+  </div>
+</div>
+
+<!-- SECTION 1: Weird & Cool tricks -->
+<section>
+  <div class="section-label">01 — เทคนิคเจ๋งๆ ที่คนอื่นทำ</div>
+  <div class="card-grid">
+
+    <div class="card">
+      <span class="card-icon">🪞</span>
+      <span class="card-tag">Meta Prompting</span>
+      <h3>ให้ Claude เขียน Prompt ให้ตัวเอง</h3>
+      <p>แทนที่จะเขียน prompt เอง ให้บอกงานกว้างๆ แล้วขอให้ Claude "เขียน prompt ที่ดีที่สุดสำหรับงานนี้" ก่อน แล้วค่อย run prompt นั้น</p>
+      <div class="code-snippet">"เขียน prompt ที่จะทำให้ AI วิเคราะห์ financial statement ได้ดีที่สุด"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🎭</span>
+      <span class="card-tag">Persona</span>
+      <h3>สวม Role เฉพาะทางสุดขีด</h3>
+      <p>ไม่ใช่แค่ "เป็นผู้เชี่ยวชาญ" แต่ระบุให้ละเอียด เช่น "เป็น CTO ที่เคย scale startup จาก 0→100M users ใน 18 เดือน"</p>
+      <div class="code-snippet">"You are a battle-hardened SRE who has survived 3 major outages at FAANG companies"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🔁</span>
+      <span class="card-tag">Iteration Loop</span>
+      <h3>ให้ Claude วิจารณ์งานตัวเอง</h3>
+      <p>หลังได้ output แล้วให้บอก "วิจารณ์สิ่งที่เพิ่งทำ แล้วทำใหม่ให้ดีกว่าเดิม 3 จุด" ได้ผลลัพธ์ที่ refined มากขึ้นอย่างเห็นได้ชัด</p>
+      <div class="code-snippet">"Rate your previous response 1-10, identify the 3 weakest parts, then redo it"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🏷️</span>
+      <span class="card-tag">XML Tags</span>
+      <h3>ใช้ XML tags จัด structure prompt</h3>
+      <p>วิธีที่ Anthropic เองแนะนำ ใส่ context ใน &lt;context&gt; ใส่งานใน &lt;task&gt; ใส่รูปแบบที่ต้องการใน &lt;format&gt; Claude จะอ่านได้แม่นยำขึ้นมาก</p>
+      <div class="code-snippet">&lt;context&gt;...&lt;/context&gt;<br>&lt;task&gt;...&lt;/task&gt;<br>&lt;format&gt;...&lt;/format&gt;</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <span class="card-tag">Chain-of-Thought</span>
+      <h3>บังคับให้คิดก่อนตอบ</h3>
+      <p>เพิ่ม "Think step by step before answering. Put your reasoning in &lt;thinking&gt; tags" ทำให้ Claude ไม่ด่วนสรุป โดยเฉพาะโจทย์ logic หรือ math</p>
+      <div class="code-snippet">"Think out loud in &lt;thinking&gt; tags, then give your final answer in &lt;answer&gt; tags"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">📐</span>
+      <span class="card-tag">Output Control</span>
+      <h3>ควบคุม format output ด้วยตัวอย่าง</h3>
+      <p>แทนการอธิบาย format ยาวๆ ให้ใส่ตัวอย่าง 2-3 ชิ้นตรงๆ (Few-shot) Claude จะ pattern-match ได้เป๊ะกว่าการอธิบายเป็นคำพูดมาก</p>
+      <div class="code-snippet">Input: "Apple" → Output: "🍎 Apple (fruit, red)"<br>Input: "Tesla" → Output: ?</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🪄</span>
+      <span class="card-tag">Steelman</span>
+      <h3>ขอ "ฝ่ายตรงข้าม" ที่แข็งแกร่งที่สุด</h3>
+      <p>แทนการถามว่า "ข้อเสียคืออะไร" ให้ถามว่า "เขียน steelman argument ที่แข็งแกร่งที่สุดที่คัดค้านไอเดียนี้" ได้มุมมองที่ลึกและจริงกว่ามาก</p>
+      <div class="code-snippet">"Write the strongest possible steelman against [your idea]"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🎯</span>
+      <span class="card-tag">Constraint Forcing</span>
+      <h3>ใส่ข้อจำกัดบ้าๆ เพื่อความคิดสร้างสรรค์</h3>
+      <p>บอก "อธิบายไอเดียนี้ในแบบที่เด็ก 10 ขวบเข้าใจ" หรือ "ใน tweet เดียว" หรือ "โดยไม่ใช้คำว่า AI เลย" — ได้ output ที่ clear และ creative ขึ้นมาก</p>
+      <div class="code-snippet">"Explain this using only words a 5-year-old would know. No jargon allowed."</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🕵️</span>
+      <span class="card-tag">Rubber Duck</span>
+      <h3>ใช้ Claude เป็น "คนฟัง" แก้ปัญหา</h3>
+      <p>แทนการถามวิธีแก้ ให้อธิบายปัญหาทีละขั้นแล้วบอก "อย่าเพิ่งช่วย แค่ถามคำถามที่ทำให้ฉันคิดต่อ" — มักแก้ปัญหาได้ด้วยตัวเอง</p>
+      <div class="code-snippet">"Don't solve this. Just ask me clarifying questions until I figure it out myself."</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Pro Tips List -->
+<section style="padding-top:0">
+  <div class="section-label">02 — Pro Tips ที่คนมักมองข้าม</div>
+  <div class="big-tips">
+
+    <div class="big-tip">
+      <div class="tip-num">01</div>
+      <div class="tip-body">
+        <h3>เปิด Projects ใส่ System Prompt ถาวร</h3>
+        <p>สร้าง Project แล้วใส่ "Custom Instructions" ครั้งเดียว Claude จะจำ context ทุก conversation ในนั้น — ไม่ต้องพิมพ์ซ้ำทุกครั้ง</p>
+      </div>
+      <div class="tip-badge">Projects Feature</div>
+    </div>
+
+    <div class="big-tip">
+      <div class="tip-num">02</div>
+      <div class="tip-body">
+        <h3>อัปโหลดไฟล์แล้วให้สรุปก่อนถาม</h3>
+        <p>ใส่ไฟล์ PDF/doc แล้วพูดว่า "summarize this in 5 bullets, then wait for my questions" — ประหยัด token และได้ตอบที่ตรงจุดกว่า</p>
+      </div>
+      <div class="tip-badge">File Upload</div>
+    </div>
+
+    <div class="big-tip">
+      <div class="tip-num">03</div>
+      <div class="tip-body">
+        <h3>ขอ "3 versions" แทนการ retry</h3>
+        <p>แทนการกด regenerate ซ้ำๆ ให้ขอ "ให้ 3 version ที่แตกต่างกัน: formal, casual, creative" แล้วเลือกหรือ blend เอง</p>
+      </div>
+      <div class="tip-badge">Creative Trick</div>
+    </div>
+
+    <div class="big-tip">
+      <div class="tip-num">04</div>
+      <div class="tip-body">
+        <h3>บอก "อย่าขอโทษ / อย่า hedge" ใน prompt</h3>
+        <p>เพิ่มใน prompt ว่า "Be direct. Don't apologize or add disclaimers." Claude จะตอบตรงๆ ไม่อ้อมค้อม เหมาะกับงาน technical หรือ feedback</p>
+      </div>
+      <div class="tip-badge">Directness</div>
+    </div>
+
+    <div class="big-tip">
+      <div class="tip-num">05</div>
+      <div class="tip-body">
+        <h3>ใช้ Extended Thinking กับโจทย์ยากๆ</h3>
+        <p>เปิด "Extended Thinking" mode (Pro+) สำหรับโจทย์ที่ต้องการ reasoning ลึก เช่น strategy, math, code review — Claude จะใช้เวลานานขึ้นแต่ผลลัพธ์ต่างกันมาก</p>
+      </div>
+      <div class="tip-badge">Pro Feature</div>
+    </div>
+
+    <div class="big-tip">
+      <div class="tip-num">06</div>
+      <div class="tip-body">
+        <h3>ส่ง URL ให้ Claude อ่านแทนการ copy-paste</h3>
+        <p>วาง URL ลงใน chat แล้วบอกว่า "อ่านหน้านี้แล้ว..." Claude จะดึง content มาวิเคราะห์ได้เลย ไม่ต้อง copy text ทั้งหน้า</p>
+      </div>
+      <div class="tip-badge">Web Fetch</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee-wrap" style="background: var(--orange);">
+  <div class="marquee-inner" style="animation-direction: reverse;">
+    ★ Be Specific &nbsp; ★ Use Examples &nbsp; ★ Set Context First &nbsp; ★ Ask for Critique &nbsp; ★ Use XML Tags &nbsp; ★ Control Format &nbsp; ★ Iterate &amp; Refine &nbsp; ★ Be Specific &nbsp; ★ Use Examples &nbsp; ★ Set Context First &nbsp; ★ Ask for Critique &nbsp; ★ Use XML Tags &nbsp; ★ Control Format &nbsp; ★ Iterate &amp; Refine &nbsp;
+  </div>
+</div>
+
+<!-- SECTION 3: Prompt Cheat Sheet -->
+<section>
+  <div class="section-label">03 — Prompt Cheat Sheet · สูตรสำเร็จ</div>
+  <table class="prompt-table">
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>วิธีใช้</th>
+        <th>เหมาะกับ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Act as [role]</td>
+        <td>ให้ Claude สวม role เฉพาะทาง เช่น "Act as a senior data scientist" เพื่อรับมุมมองจากผู้เชี่ยวชาญ</td>
+        <td>ขอความเห็น / วิเคราะห์เชิงลึก</td>
+      </tr>
+      <tr>
+        <td>Think step by step</td>
+        <td>บังคับให้แสดง reasoning ทีละขั้น ไม่ด่วนสรุป ลดโอกาสผิดพลาดใน logic</td>
+        <td>Math, logic, code debugging</td>
+      </tr>
+      <tr>
+        <td>Here are examples: [A→B, C→D]</td>
+        <td>ให้ตัวอย่าง input/output 2-3 ชิ้นก่อน แล้วถามของจริง Claude จะ pattern-match ได้เป๊ะ</td>
+        <td>สร้าง content ที่ต้องการ format แน่นอน</td>
+      </tr>
+      <tr>
+        <td>Critique then improve</td>
+        <td>ให้ Claude วิจารณ์งานตัวเองก่อน แล้วทำ version ใหม่ที่แก้จุดอ่อน ได้ผลลัพธ์ refined กว่ามาก</td>
+        <td>Writing, code review, design critique</td>
+      </tr>
+      <tr>
+        <td>What would [person] say?</td>
+        <td>"What would Elon Musk / a skeptical investor / your harshest critic say about this?" — ได้มุมมองที่หลากหลาย</td>
+        <td>ทดสอบไอเดีย / business plan</td>
+      </tr>
+      <tr>
+        <td>Rubber duck debug</td>
+        <td>"I'll explain my problem. Don't solve it — just ask questions until I figure it out" — ช่วยคิดแก้เองได้</td>
+        <td>Problem-solving, code bugs</td>
+      </tr>
+      <tr>
+        <td>Summarize then Q&A</td>
+        <td>ให้สรุปก่อน แล้ว "Now I'll ask specific questions" — ประหยัด context window และได้ตอบที่ตรงจุด</td>
+        <td>อ่านเอกสารยาว, research</td>
+      </tr>
+      <tr>
+        <td>Give 3 options</td>
+        <td>"Give me 3 different approaches: conservative, balanced, and bold" — ไม่ต้อง retry หลายรอบ</td>
+        <td>ตัดสินใจ, creative work</td>
+      </tr>
+      <tr>
+        <td>ELI5 / ELI-PhD</td>
+        <td>Explain Like I'm 5 หรือ "explain assuming I have a PhD in this field" — ปรับระดับความลึก</td>
+        <td>เรียนรู้หัวข้อใหม่</td>
+      </tr>
+      <tr>
+        <td>Format: [JSON/table/bullets]</td>
+        <td>ระบุ output format ตรงๆ ท้าย prompt เช่น "Respond only as JSON. No explanation." — ง่ายต่อการนำไปใช้</td>
+        <td>Developer / automation tasks</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Claude<span>.</span></div>
+  <p>Tips & Tricks compiled from the Claude community, Anthropic docs, and real power users. ข้อมูล ณ กุมภาพันธ์ 2026 — claude.ai</p>
+</footer>
+
+</body>
+</html>
